@@ -14,10 +14,10 @@ namespace ConsoleApp1
                 // Create
                 Console.WriteLine("Inserting a new user");
                 db.Add(new User { Name = "Teszt Elek", 
-                                  Email="t.elek@edu.bme.hu", 
-                                  BankAccount= "12345678-12345678-12345678", 
-                                  Password="pikachu", 
-                                  PhoneNumber="06701234567" });
+                                  Email = "t.elek@edu.bme.hu", 
+                                  BankAccount = "12345678-12345678-12345678", 
+                                  Password = "pikachu", 
+                                  PhoneNumber = "06701234567" });
                 try
                 {
                     db.SaveChanges();
