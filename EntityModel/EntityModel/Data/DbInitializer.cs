@@ -13,7 +13,7 @@ namespace EntityModel.Data
         {
             context.Database.EnsureCreated();
 
-            if (context.Users.Local.Any())
+            if (context.Users.Any())
             {
                 return;
             }
