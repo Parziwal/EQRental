@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1
+namespace Main
 {
     class Rental
     {
@@ -14,5 +14,9 @@ namespace ConsoleApp1
         public DateTime EndDate { get; set; }
         public DateTime OrderDate { get; set; }
         public Payment Payment { get; set; }
+        public int EquipmentId { get; set; }
+        public int AddressID { get; set; }
+        public int StatusID { get; set; }
+        public int PaymentID { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace ConsoleApp1
+namespace Main
 {
     class Equipment
     {
@@ -15,5 +15,7 @@ namespace ConsoleApp1
         public Category Category { get; set; }
         public User Owner { get; set; }
         public ICollection<Rental> Rentals { get; set; }
+        public int CategoryID { get; set; }
+        public int OwnerID { get; set; }
     }
 }

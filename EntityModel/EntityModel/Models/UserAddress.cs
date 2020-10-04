@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleApp1
+namespace Main
 {
     class UserAddress
     {
@@ -12,5 +12,7 @@ namespace ConsoleApp1
         public string Street { get; set; }
         public User User { get; set; }
         public ICollection<Rental> Rentals { get; set; }
+
+        public int UserID { get; set; }
     }
 }

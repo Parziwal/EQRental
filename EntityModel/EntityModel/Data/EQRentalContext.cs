@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 
-namespace ConsoleApp1
+namespace Main
 {
     class EQRentalContext : DbContext
     {
