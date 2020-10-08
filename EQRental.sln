@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30330.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EQRental", "EQRental\EQRental.csproj", "{AFE5B758-C173-46F2-B853-5F718AE10D1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFE5B758-C173-46F2-B853-5F718AE10D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFE5B758-C173-46F2-B853-5F718AE10D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFE5B758-C173-46F2-B853-5F718AE10D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFE5B758-C173-46F2-B853-5F718AE10D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {721BA8EE-1260-4A7B-A906-5D17F55EC86E}
+	EndGlobalSection
+EndGlobal
