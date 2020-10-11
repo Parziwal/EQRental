@@ -11,6 +11,8 @@ using EQRental.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System;
 
 namespace EQRental
 {
@@ -50,6 +52,7 @@ namespace EQRental
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -95,5 +98,6 @@ namespace EQRental
                 }
             });
         }
+
     }
 }
