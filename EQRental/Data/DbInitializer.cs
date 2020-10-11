@@ -44,7 +44,7 @@ namespace EQRental.Data
                 {
                 new Status{ Name = "Processing" },
                 new Status{ Name = "Preparing to ship" },
-                new Status{ Name = "Shipped" },
+                new Status{ Name = "Under delivering" },
                 new Status{ Name = "Delivered" },
                 new Status{ Name = "Canceled" },
                 };
@@ -82,10 +82,10 @@ namespace EQRental.Data
 
                 var addresses = new UserAddress[]
                 {
-                new UserAddress{ PostalCode=1022, City="Budapest", Street="Lévay u. 5", UserID = users[0].Id },
-                new UserAddress{ PostalCode=1047, City="Budapest", Street="Báthory u. 2", UserID = users[1].Id },
-                new UserAddress{ PostalCode=4032, City="Debrecen", Street="Babér u. 6", UserID = users[2].Id },
-                new UserAddress{ PostalCode=6757, City="Szeged", Street="Súnyog út", UserID = users[3].Id },
+                new UserAddress{ PostalCode=1022, City="Budapest", Street="Lévay u. 5", User = users[0] },
+                new UserAddress{ PostalCode=1047, City="Budapest", Street="Báthory u. 2", User = users[1] },
+                new UserAddress{ PostalCode=4032, City="Debrecen", Street="Babér u. 6", User = users[2] },
+                new UserAddress{ PostalCode=6757, City="Szeged", Street="Súnyog út", User = users[3] },
                 };
 
                 context.UserAddresses.AddRange(addresses);
@@ -96,7 +96,7 @@ namespace EQRental.Data
                 new Equipment{Name="Bosch Rotak Lawnmower", PricePerDay=5000,
                     Details=@"The Bosch Rotak 32 R is a lightweight and compact lawnmower with a 32 cm cutting width making it ideal for medium sized lawns up to 150 m and sup2; in size.
                     It has a 1200 W and lsquo; Powerdrive and rsquo; motor that enables you to cut long grass with ease, as well as innovative grass combs, which allows the lawnmower to easily cut up to and over the edge of your lawn ensuring neat and tidy results.",
-                    Available=true, CategoryID=4, OwnerID=users[0].Id},
+                    Available=true, Category=categories[3], Owner=users[0]},
                 };
 
                 context.Equipments.AddRange(equipments);
@@ -104,8 +104,8 @@ namespace EQRental.Data
 
                 var rentals = new Rental[]
                 {
-                new Rental{EquipmentId=1, OrderDate=new DateTime(2020, 10, 20), StartDate=new DateTime(2020, 11, 1), EndDate=new DateTime(2020, 11, 7),
-                AddressID=3, PaymentID=1, StatusID=2}
+                new Rental{Equipment=equipments[0], OrderDate=new DateTime(2020, 10, 20), StartDate=new DateTime(2020, 11, 1), EndDate=new DateTime(2020, 11, 7),
+                Address=addresses[2], Payment=payments[0], Status=statuses[1]}
                 };
 
                 context.Rentals.AddRange(rentals);
