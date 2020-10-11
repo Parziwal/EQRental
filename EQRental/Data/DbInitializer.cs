@@ -97,6 +97,9 @@ namespace EQRental.Data
                     Details=@"The Bosch Rotak 32 R is a lightweight and compact lawnmower with a 32 cm cutting width making it ideal for medium sized lawns up to 150 m and sup2; in size.
                     It has a 1200 W and lsquo; Powerdrive and rsquo; motor that enables you to cut long grass with ease, as well as innovative grass combs, which allows the lawnmower to easily cut up to and over the edge of your lawn ensuring neat and tidy results.",
                     Available=true, Category=categories[3], Owner=users[0]},
+                new Equipment{Name="Nasjac BBQ Barbecue Tool Set", PricePerDay=2000,
+                    Details=@"20 pieces of barbecue set, including 8 food fork, 7 skewer, 1 wire cleaning brush, 1 oil brush, 1 grill clamp, 1 roasted spatula, 1 fork grill. The kit contains all the tools you need for a barbecue.",
+                    Available=true, Category=categories[3], Owner=users[1]}
                 };
 
                 context.Equipments.AddRange(equipments);
