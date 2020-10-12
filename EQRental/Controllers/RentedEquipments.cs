@@ -43,12 +43,12 @@ namespace EQRental.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, string status)
         {
-            var status = (from s in context.Statuses
-                          where s.Name.ToLower() == value.ToLower()
+            var rentalStatus = (from s in context.Statuses
+                          where s.Name.ToLower() == status.ToLower()
                           select s).First();
-            if (status == null)
+            if (rentalStatus == null)
                 return;
 
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -58,14 +58,14 @@ namespace EQRental.Controllers
             if (userRental.Status.Name.ToLower() == "canceled")
                 return;
 
-            if(status.Name.ToLower() == "canceled" && (userRental.Status.Name.ToLower() == "processing" || userRental.Status.Name.ToLower() == "preparing to ship"))
+            if(rentalStatus.Name.ToLower() == "canceled" && (userRental.Status.Name.ToLower() == "processing" || userRental.Status.Name.ToLower() == "preparing to ship"))
             {
-                userRental.Rental.StatusID = status.ID;
+                userRental.Rental.StatusID = rentalStatus.ID;
                 context.SaveChanges();
             }
-            else if(status.Name.ToLower() == "delivered" && (userRental.Status.Name.ToLower() == "under delivering"))
+            else if(rentalStatus.Name.ToLower() == "delivered" && (userRental.Status.Name.ToLower() == "under delivering"))
             {
-                userRental.Rental.StatusID = status.ID;
+                userRental.Rental.StatusID = rentalStatus.ID;
                 context.SaveChanges();
             }
         }

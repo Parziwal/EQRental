@@ -108,7 +108,9 @@ namespace EQRental.Data
                 var rentals = new Rental[]
                 {
                 new Rental{Equipment=equipments[0], OrderDate=new DateTime(2020, 10, 20), StartDate=new DateTime(2020, 11, 1), EndDate=new DateTime(2020, 11, 7),
-                Address=addresses[2], Payment=payments[0], Status=statuses[1]}
+                Address=addresses[2], Payment=payments[0], Status=statuses[1]},
+                new Rental{Equipment=equipments[1], OrderDate=new DateTime(2020, 10, 22), StartDate=new DateTime(2020, 11, 10), EndDate=new DateTime(2020, 11, 13),
+                Address=addresses[2], Payment=payments[1], Status=statuses[0]}
                 };
 
                 context.Rentals.AddRange(rentals);
