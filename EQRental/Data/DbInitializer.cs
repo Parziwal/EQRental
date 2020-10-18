@@ -18,23 +18,19 @@ namespace EQRental.Data
         {
             using (var context = serviceProvider.GetRequiredService<ApplicationDbContext>())
             {
+                context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-
-                if (context.Users.Any())
-                {
-                    return;
-                }
 
                 var categories = new Category[]
                 {
-                new Category{ Name = "Electronics & Computers" },
-                new Category{ Name = "Kitchen & Home Appliences" },
-                new Category{ Name = "Furniture" },
-                new Category{ Name = "Garden & Outdoors" },
-                new Category{ Name = "Sports & Outdoors" },
-                new Category{ Name = "Car & Motorbike" },
-                new Category{ Name = "Business, Industry & Science" },
-                new Category{ Name = "Other" },
+                    new Category{ Name = "Electronics & Computers" },
+                    new Category{ Name = "Kitchen & Home Appliences" },
+                    new Category{ Name = "Furniture" },
+                    new Category{ Name = "Garden & Outdoors" },
+                    new Category{ Name = "Sports & Outdoors" },
+                    new Category{ Name = "Car & Motorbike" },
+                    new Category{ Name = "Business, Industry & Science" },
+                    new Category{ Name = "Other" },
                 };
 
                 context.Categories.AddRange(categories);
@@ -42,11 +38,11 @@ namespace EQRental.Data
 
                 var statuses = new Status[]
                 {
-                new Status{ Name = "Processing" },
-                new Status{ Name = "Preparing to ship" },
-                new Status{ Name = "Under delivering" },
-                new Status{ Name = "Delivered" },
-                new Status{ Name = "Canceled" },
+                    new Status{ Name = "PROCESSING" },
+                    new Status{ Name = "PREPARING TO SHIP" },
+                    new Status{ Name = "UNDER DELIVERING" },
+                    new Status{ Name = "DELIVERED" },
+                    new Status{ Name = "CANCELED" },
                 };
 
                 context.Statuses.AddRange(statuses);
@@ -63,17 +59,17 @@ namespace EQRental.Data
 
                 var users = new ApplicationUser[]
                 {
-                new ApplicationUser{UserName="alexander33", FullName="Carson Alexander", Email="carson@email.hu", PhoneNumber="06-30-123-1234", BankAccount="10032230-04525279-06720008"},
-                new ApplicationUser{UserName="yanli99", FullName="Yan Li", Email="yan@email.hu", PhoneNumber="06-20-157-1234", BankAccount="12342230-04111279-0623408"},
-                new ApplicationUser{UserName="peggy95", FullName="Peggy Justice", Email="peggy@email.hu", PhoneNumber="06-30-787-1564", BankAccount="18732230-04556279-06720067"},
-                new ApplicationUser{UserName="nini45",FullName="Nini Olivetto", Email="nini@email.hu", PhoneNumber="06-30-163-1984", BankAccount="19832230-04525279-01220087"},
+                    new ApplicationUser{UserName="alexander33", FullName="Carson Alexander", Email="carson@email.hu", PhoneNumber="06-30-123-1234", BankAccount="10032230-04525279-06720008"},
+                    new ApplicationUser{UserName="yanli99", FullName="Yan Li", Email="yan@email.hu", PhoneNumber="06-20-157-1234", BankAccount="12342230-04111279-0623408"},
+                    new ApplicationUser{UserName="peggy95", FullName="Peggy Justice", Email="peggy@email.hu", PhoneNumber="06-30-787-1564", BankAccount="18732230-04556279-06720067"},
+                    new ApplicationUser{UserName="nini45",FullName="Nini Olivetto", Email="nini@email.hu", PhoneNumber="06-30-163-1984", BankAccount="19832230-04525279-01220087"},
                 };
 
                 PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
                 foreach (ApplicationUser user in users)
                 {
                     user.PasswordHash = passwordHasher.HashPassword(user, "Test.54321");
-                    user.NormalizedUserName = user.Email.ToUpper();
+                    user.NormalizedUserName = user.UserName.ToUpper();
                     user.NormalizedEmail = user.Email.ToUpper();
                 }
                 
@@ -82,10 +78,10 @@ namespace EQRental.Data
 
                 var addresses = new UserAddress[]
                 {
-                new UserAddress{ PostalCode=1022, City="Budapest", Street="Lévay u. 5", User = users[0] },
-                new UserAddress{ PostalCode=1047, City="Budapest", Street="Báthory u. 2", User = users[1] },
-                new UserAddress{ PostalCode=4032, City="Debrecen", Street="Babér u. 6", User = users[2] },
-                new UserAddress{ PostalCode=6757, City="Szeged", Street="Súnyog út", User = users[3] },
+                    new UserAddress{ PostalCode=1022, City="Budapest", Street="Lévay u. 5", User = users[0] },
+                    new UserAddress{ PostalCode=1047, City="Budapest", Street="Báthory u. 2", User = users[1] },
+                    new UserAddress{ PostalCode=4032, City="Debrecen", Street="Babér u. 6", User = users[2] },
+                    new UserAddress{ PostalCode=6757, City="Szeged", Street="Súnyog út", User = users[3] },
                 };
 
                 context.UserAddresses.AddRange(addresses);
@@ -93,13 +89,13 @@ namespace EQRental.Data
 
                 var equipments = new Equipment[]
                 {
-                new Equipment{Name="Bosch Rotak Lawnmower", PricePerDay=5000,
-                    Details=@"The Bosch Rotak 32 R is a lightweight and compact lawnmower with a 32 cm cutting width making it ideal for medium sized lawns up to 150 m and sup2; in size.
-                    It has a 1200 W and lsquo; Powerdrive and rsquo; motor that enables you to cut long grass with ease, as well as innovative grass combs, which allows the lawnmower to easily cut up to and over the edge of your lawn ensuring neat and tidy results.",
-                    Available=true, Category=categories[3], Owner=users[0]},
-                new Equipment{Name="Nasjac BBQ Barbecue Tool Set", PricePerDay=2000,
-                    Details=@"20 pieces of barbecue set, including 8 food fork, 7 skewer, 1 wire cleaning brush, 1 oil brush, 1 grill clamp, 1 roasted spatula, 1 fork grill. The kit contains all the tools you need for a barbecue.",
-                    Available=true, Category=categories[3], Owner=users[1]}
+                    new Equipment{Name="Bosch Rotak Lawnmower", PricePerDay=5000,
+                        Details=@"The Bosch Rotak 32 R is a lightweight and compact lawnmower with a 32 cm cutting width making it ideal for medium sized lawns up to 150 m and sup2; in size.
+                        It has a 1200 W and lsquo; Powerdrive and rsquo; motor that enables you to cut long grass with ease, as well as innovative grass combs, which allows the lawnmower to easily cut up to and over the edge of your lawn ensuring neat and tidy results.",
+                        Available=true, Category=categories[3], Owner=users[0]},
+                    new Equipment{Name="Nasjac BBQ Barbecue Tool Set", PricePerDay=2000,
+                        Details=@"20 pieces of barbecue set, including 8 food fork, 7 skewer, 1 wire cleaning brush, 1 oil brush, 1 grill clamp, 1 roasted spatula, 1 fork grill. The kit contains all the tools you need for a barbecue.",
+                        Available=true, Category=categories[3], Owner=users[1]}
                 };
 
                 context.Equipments.AddRange(equipments);
@@ -107,10 +103,10 @@ namespace EQRental.Data
 
                 var rentals = new Rental[]
                 {
-                new Rental{Equipment=equipments[0], OrderDate=new DateTime(2020, 10, 20), StartDate=new DateTime(2020, 11, 1), EndDate=new DateTime(2020, 11, 7),
-                Address=addresses[2], Payment=payments[0], Status=statuses[1]},
-                new Rental{Equipment=equipments[1], OrderDate=new DateTime(2020, 10, 22), StartDate=new DateTime(2020, 11, 10), EndDate=new DateTime(2020, 11, 13),
-                Address=addresses[2], Payment=payments[1], Status=statuses[0]}
+                    new Rental{ Equipment=equipments[0], OrderDate=new DateTime(2020, 10, 20), StartDate=new DateTime(2020, 11, 1), EndDate=new DateTime(2020, 11, 7),
+                    Address=addresses[2], Payment=payments[0], Status=statuses[1] },
+                    new Rental{ Equipment=equipments[1], OrderDate=new DateTime(2020, 10, 22), StartDate=new DateTime(2020, 11, 10), EndDate=new DateTime(2020, 11, 13),
+                    Address=addresses[2], Payment=payments[1], Status=statuses[0] }
                 };
 
                 context.Rentals.AddRange(rentals);
