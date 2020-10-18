@@ -113,8 +113,12 @@ namespace EQRental.Controllers
                     }
                 }
             }
-
-            return BadRequest($"{status} status can not be applied to this rental.");
+            else
+            {
+                return BadRequest($"{status} status can not be applied to this rental.");
+            }
+            
+            return NoContent();
         }
 
         private bool RentalExists(int id)
