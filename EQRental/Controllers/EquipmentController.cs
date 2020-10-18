@@ -38,11 +38,11 @@ namespace EQRental.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Equipment>> Get(int id)
+        public async Task<ActionResult<EquipmentDTO>> Get(int id)
         {
             var ret = await (from e in context.Equipments
                              where e.ID == id
-                             select e).FirstOrDefaultAsync();
+                             select new EquipmentDTO(e, e.Category, e.Owner)).FirstOrDefaultAsync();
             if (ret == null)
                 return NotFound();
             return ret;
