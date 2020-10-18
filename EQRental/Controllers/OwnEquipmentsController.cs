@@ -10,6 +10,7 @@ using EQRental.Models;
 using EQRental.Models.DTO;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace EQRental.Controllers
 {
@@ -26,55 +27,74 @@ namespace EQRental.Controllers
         }
 
         [HttpGet]
-        public async Task<List<EquipmentOverviewDTO>> GetEquipments()
+        public async Task<IEnumerable<EquipmentOverviewDTO>> GetEquipments()
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var ownEquipments = from e in context.Equipments
                                 where e.OwnerID == userId
                                 select new EquipmentOverviewDTO(e, e.Category);
-            return ownEquipments.ToList();
+            return await ownEquipments.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<List<EquipmentDTOwRentals>> GetEquipment(int id)
+        public async Task<ActionResult<OwnEquipmentDTO>> GetEquipment(int id)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var equipmentRentals = from r in context.Rentals
                                    where r.Equipment.OwnerID == userId && r.Equipment.ID == id
-                                   select new RentalDTO(r, r.Equipment, r.Equipment.Category, r.Equipment.Owner, r.Address, r.Status, r.Payment);
-            var rentList = equipmentRentals.ToList();
+                                   select new EquipmentRentalsDTO(r, r.Address.User, r.Address, r.Status, r.Payment);
+            var rentList = await equipmentRentals.ToListAsync();
             var ownEquipments = from e in context.Equipments
                                 where e.OwnerID == userId && e.ID == id
-                                select new EquipmentDTOwRentals(e, e.Category, e.Owner, rentList);
-            return ownEquipments.ToList();
-        }
-
-        [HttpPut("{id}")]
-        public async void PutRental(int id, Equipment equipment, Rental rental)
-        {
-            equipment.Rentals.Add(rental);
-            await context.SaveChangesAsync();
+                                select new OwnEquipmentDTO(e, e.Category, e.Owner, rentList);
+            return await ownEquipments.SingleOrDefaultAsync();
         }
 
         [HttpPost]
-        public async void PostEquipment(Equipment equipment)
+        public async Task<ActionResult<EquipmentOverviewDTO>> PostEquipment(EquipmentPostDTO equipment)
         {
-            context.Equipments.Add(equipment);
+            var category = await (from c in context.Categories
+                                  where c.Name == equipment.Category
+                                  select c).SingleOrDefaultAsync();
+            if (category == null)
+            {
+                return BadRequest();
+            }
+            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            var equipmentModel = new Equipment();
+            equipmentModel.Name = equipment.Name;
+            equipmentModel.Details = equipment.Details;
+            equipmentModel.ImagePath = equipment.ImagePath;
+            equipmentModel.PricePerDay = equipment.PricePerDay;
+            equipmentModel.Available = equipment.Available;
+            equipmentModel.OwnerID = userId;
+            equipmentModel.CategoryID = category.ID;
+
+            context.Equipments.Add(equipmentModel);
             await context.SaveChangesAsync();
+
+            var equipmentOverview = new EquipmentOverviewDTO(equipmentModel, equipmentModel.Category);
+            return CreatedAtAction("GetEquipment", equipmentOverview);
         }
 
         [HttpDelete("{id}")]
-        public async void DeleteEquipment(int id)
+        public async Task<IActionResult> DeleteEquipment(int id)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var deleteItem = (from item in context.Equipments
-                              where item.ID == id && userId == item.OwnerID
-                              select item).FirstOrDefault();
-            if (deleteItem != null)
+            var deleteItem = await (from item in context.Equipments
+                                    where item.ID == id && userId == item.OwnerID
+                                    select item).SingleOrDefaultAsync();
+
+            if (deleteItem == null)
             {
-                context.Equipments.Remove(deleteItem);
-                await context.SaveChangesAsync();
+                return NotFound();
             }
+
+            context.Equipments.Remove(deleteItem);
+            await context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

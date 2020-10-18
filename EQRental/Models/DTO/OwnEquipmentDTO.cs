@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EQRental.Models.DTO
 {
-    public class EquipmentDTOwRentals
+    public class OwnEquipmentDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -13,12 +13,10 @@ namespace EQRental.Models.DTO
         public string ImagePath { get; set; }
         public int PricePerDay { get; set; }
         public bool Available { get; set; }
-        public UserDTO Owner { get; set; }
         public string Category { get; set; }
+        public List<EquipmentRentalsDTO> Rentals { get; set; }
 
-        public List<RentalDTO> RentalsList { get; set; }
-
-        public EquipmentDTOwRentals(Equipment equipment, Category category, ApplicationUser user, List<RentalDTO> RL)
+        public OwnEquipmentDTO(Equipment equipment, Category category, ApplicationUser user, List<EquipmentRentalsDTO> rentals)
         {
             Id = equipment.ID;
             Name = equipment.Name;
@@ -27,8 +25,7 @@ namespace EQRental.Models.DTO
             PricePerDay = equipment.PricePerDay;
             Available = equipment.Available;
             Category = category.Name;
-            Owner = new UserDTO(user);
-            RentalsList = RL;
+            Rentals = rentals;
         }
     }
 }
