@@ -1,0 +1,48 @@
+﻿@page
+@model AllAddressModel
+@{
+    ViewData["Title"] = "All Address";
+    ViewData["ActivePage"] = ManageNavPages.AllAddress;
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<p>
+    <a asp-page="Address">Add New Address</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Postal Code")
+            </th>
+            <th>
+                @Html.DisplayName("City")
+            </th>
+            <th>
+                @Html.DisplayName("Street")
+            </th>
+            <th>Edit | Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Addresses)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostalCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Street)
+                </td>
+                <td>
+                    <a asp-page="./EditAddress" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./AllAddress" onclick="return confirm('Are you sure you want to delete this item?');" asp-page-handler="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -96,5 +96,37 @@ namespace EQRental.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEquipment(int id, EquipmentPostDTO equipment)
+        {
+            var category = await (from c in context.Categories
+                                  where c.Name == equipment.Category
+                                  select c).SingleOrDefaultAsync();
+            if (category == null)
+            {
+                return BadRequest();
+            }
+
+            var equipmentModel = await (from e in context.Equipments
+                                        where e.ID == id
+                                        select e).SingleOrDefaultAsync();
+
+            if (equipmentModel == null)
+            {
+                return NotFound();
+            }
+
+            equipmentModel.Name = equipment.Name;
+            equipmentModel.Details = equipment.Details;
+            equipmentModel.ImagePath = equipment.ImagePath;
+            equipmentModel.PricePerDay = equipment.PricePerDay;
+            equipmentModel.Available = equipment.Available;
+            equipmentModel.CategoryID = category.ID;
+
+            await context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

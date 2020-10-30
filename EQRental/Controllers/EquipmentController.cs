@@ -48,11 +48,6 @@ namespace EQRental.Controllers
             return ret;
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
         [HttpPost]
         public async Task<ActionResult<Equipment>> PostEquipment(RentalOrderDTO order)
         {
@@ -76,8 +71,10 @@ namespace EQRental.Controllers
             _rental.Equipment = await (from e in context.Equipments
                                        where e.ID == order.EquipmentId
                                        select e).FirstOrDefaultAsync();
+
+            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             _rental.Address = await (from uaddr in context.UserAddresses
-                                     where uaddr.ID == order.AddressId
+                                     where uaddr.ID == order.AddressId && uaddr.UserID == userId
                                      select uaddr).FirstOrDefaultAsync();
             _rental.Status = await (from s in context.Statuses
                                     where s.Name == "Processing"

@@ -13,8 +13,8 @@ namespace EQRental.Models.DTO
         public string ImagePath { get; set; }
         public int PricePerDay { get; set; }
         public bool Available { get; set; }
-        public UserDTO Owner { get; set; }
         public string Category { get; set; }
+        public UserDTO Owner { get; set; }
 
         public EquipmentDTO(Equipment equipment, Category category, ApplicationUser user)
         {

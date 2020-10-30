@@ -16,10 +16,9 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div
-        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+        class="navbar-collapse collapse d-sm-inline-flex"
         [ngClass]="{ show: isExpanded }"
       >
-        <app-login-menu></app-login-menu>
         <ul class="navbar-nav flex-grow">
           <li
             class="nav-item"
@@ -29,16 +28,30 @@
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/rental']">
+              Rental
+            </a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
+            <a class="nav-link text-dark" [routerLink]="['/my-equipments']">
+              My equipments
+            </a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/rented-equipments']">
+              Rented equipments
+            </a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">
+              About us
+            </a>
           </li>
         </ul>
+      </div>
+      <div
+        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" >
+        <app-login-menu></app-login-menu>
       </div>
     </div>
   </nav>
