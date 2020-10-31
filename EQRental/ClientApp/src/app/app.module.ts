@@ -10,8 +10,11 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { RentalComponent } from './rental/rental.component';
 import { MyEquipmentsComponent } from './my-equipments/my-equipments.component';
-import { RentedEquipmentsComponent } from './rented-equipments/rented-equipments.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ErrorComponent } from './error/error.component';
+import { RentedEquipmentsListComponent } from './rented-equipments/rented-equipments-list/rented-equipments-list.component';
+import { RentedEquipmentDetailsComponent } from './rented-equipments/rented-equipment-details/rented-equipment-details.component';
+import { RentedEquipmentsComponent } from './rented-equipments/rented-equipments.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { AppRoutingModule } from './app-routing.module';
     HomeComponent,
     RentalComponent,
     MyEquipmentsComponent,
-    RentedEquipmentsComponent
+    ErrorComponent,
+    RentedEquipmentsComponent,
+    RentedEquipmentsListComponent,
+    RentedEquipmentDetailsComponent
   ],
   imports: [
     AppRoutingModule,

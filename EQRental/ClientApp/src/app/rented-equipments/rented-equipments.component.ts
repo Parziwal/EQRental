@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-rented-equipments',
+  selector: 'app-rented-equipments-list',
   templateUrl: './rented-equipments.component.html',
-  styleUrls: ['./rented-equipments.component.css']
 })
-export class RentedEquipmentsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class RentedEquipmentsComponent {
 }

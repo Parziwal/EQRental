@@ -10,8 +10,8 @@ namespace EQRental.Models.DTO
         public int Id { get; set; }
         public EquipmentOverviewDTO Equipment { get; set; }
         public UserDTO Owner { get; set; }
-        public string Status { get; set; }
         public UserAddressDTO Address { get; set; }
+        public string Status { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime OrderDate { get; set; }
