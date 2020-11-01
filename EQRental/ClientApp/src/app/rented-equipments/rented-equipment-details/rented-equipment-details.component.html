@@ -1,0 +1,60 @@
+<div class="row">
+    <div id="logo" class="col-6">
+        Rental Information
+    </div>
+    <div id="invoice-id" class="col-2">
+        <div class="row">Invoice #: {{ id }}</div>
+        <div class="row">Created: {{ rental?.orderDate | date:'medium' }}</div>
+    </div>
+</div>
+<div class="row">
+    <div id="shipto" class="col-4">
+        <div class="row"><strong>Ship to:</strong></div>
+        <div class="row">Street: {{ rental?.address.street }}</div>
+        <div class="row">City: {{ rental?.address.postalCode }}, {{ rental?.address.city }}</div>
+    </div>
+    <div id="from" class="col-4">
+        <div class="row"><strong>From:</strong></div>
+        <div class="row">{{ rental?.owner.name }}</div>
+        <div class="row">{{ rental?.owner.email }}</div>
+        <div class="row">{{ rental?.owner.phoneNumber }}</div>
+        <div class="row">{{ rental?.owner.bankAccount }}</div>
+    </div>
+</div>
+<div class="row">
+    <table id="item">
+        <tr>
+          <th>Equipment name</th>
+          <th>Equipment type</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Price / Day</th>
+          <th>Subtotal</th>
+        </tr>
+        <tr>
+          <td>{{rental?.equipment.name}}</td>
+          <td>{{rental?.equipment.category}}</td>
+          <td>{{rental?.startDate | date:'shortDate'}}</td>
+          <td>{{rental?.endDate | date:'shortDate' }}</td>
+          <td>{{rental?.equipment.pricePerDay}}</td>
+          <td>{{subTotal}}</td>
+        </tr>
+      </table>
+</div>
+<div class="row">
+    <div id="payment" class="col">
+        <strong>Payment method: </strong> {{ rental?.paymentMethod }}
+    </div>
+</div>
+<div class="row">
+    <div id="status" class="col">
+        <strong>Status method: </strong> {{ rental?.status }}
+        <div id="set-status">
+            <button type="button" class="btn btn-light" (click)="onSetStatus()" *ngIf="statusBtnLabel">{{ statusBtnLabel }}</button>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <button id="back" type="button" class="btn btn-success" (click)="onClickBack()">Back</button>
+</div>
