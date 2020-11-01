@@ -11,6 +11,8 @@ using EQRental.Models.DTO;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace EQRental.Controllers
 {
@@ -20,10 +22,12 @@ namespace EQRental.Controllers
     public class OwnEquipmentsController : ControllerBase
     {
         private readonly ApplicationDbContext context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public OwnEquipmentsController(ApplicationDbContext _context)
+        public OwnEquipmentsController(ApplicationDbContext _context, IWebHostEnvironment _webHostEnvironment)
         {
             context = _context;
+            webHostEnvironment = _webHostEnvironment;
         }
 
         [HttpGet]
@@ -65,7 +69,7 @@ namespace EQRental.Controllers
             var equipmentModel = new Equipment();
             equipmentModel.Name = equipment.Name;
             equipmentModel.Details = equipment.Details;
-            equipmentModel.ImagePath = equipment.ImagePath;
+            equipmentModel.ImagePath = GenerateFilePath(equipment.Image);
             equipmentModel.PricePerDay = equipment.PricePerDay;
             equipmentModel.Available = equipment.Available;
             equipmentModel.OwnerID = userId;
@@ -119,7 +123,7 @@ namespace EQRental.Controllers
 
             equipmentModel.Name = equipment.Name;
             equipmentModel.Details = equipment.Details;
-            equipmentModel.ImagePath = equipment.ImagePath;
+            equipmentModel.ImagePath = GenerateFilePath(equipment.Image);
             equipmentModel.PricePerDay = equipment.PricePerDay;
             equipmentModel.Available = equipment.Available;
             equipmentModel.CategoryID = category.ID;
@@ -127,6 +131,23 @@ namespace EQRental.Controllers
             await context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        private string GenerateFilePath(IFormFile file)
+        {
+            string uniqueFileName = null;
+
+            if (file != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images", "Equipments");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyToAsync(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
     }
 }
