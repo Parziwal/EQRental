@@ -69,7 +69,7 @@ namespace EQRental.Controllers
             var equipmentModel = new Equipment();
             equipmentModel.Name = equipment.Name;
             equipmentModel.Details = equipment.Details;
-            equipmentModel.ImagePath = GenerateFilePath(equipment.Image);
+            equipmentModel.ImagePath = GenerateFilePath(equipment.Image).Result;
             equipmentModel.PricePerDay = equipment.PricePerDay;
             equipmentModel.Available = equipment.Available;
             equipmentModel.OwnerID = userId;
@@ -123,7 +123,7 @@ namespace EQRental.Controllers
 
             equipmentModel.Name = equipment.Name;
             equipmentModel.Details = equipment.Details;
-            equipmentModel.ImagePath = GenerateFilePath(equipment.Image);
+            equipmentModel.ImagePath = GenerateFilePath(equipment.Image).Result;
             equipmentModel.PricePerDay = equipment.PricePerDay;
             equipmentModel.Available = equipment.Available;
             equipmentModel.CategoryID = category.ID;
@@ -133,7 +133,7 @@ namespace EQRental.Controllers
             return NoContent();
         }
 
-        private string GenerateFilePath(IFormFile file)
+        private async Task<string> GenerateFilePath(IFormFile file)
         {
             string uniqueFileName = null;
 
@@ -144,7 +144,7 @@ namespace EQRental.Controllers
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    file.CopyToAsync(fileStream);
+                    await file.CopyToAsync(fileStream);
                 }
             }
             return uniqueFileName;
