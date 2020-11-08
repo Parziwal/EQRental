@@ -66,7 +66,7 @@ namespace EQRental.Controllers
                                      select p).FirstOrDefaultAsync();
             _rental.StartDate = order.StartDate;
             _rental.EndDate = order.EndDate;
-            _rental.OrderDate = DateTime.Today;
+            _rental.OrderDate = DateTime.Now;
             _rental.EquipmentId = order.EquipmentId;
             _rental.Equipment = await (from e in context.Equipments
                                        where e.ID == order.EquipmentId

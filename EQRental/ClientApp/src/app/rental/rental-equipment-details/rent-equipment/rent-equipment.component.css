@@ -1,0 +1,8 @@
+.btn.btn-success {
+    padding: 10px 30px 10px 30px;
+}
+
+.btn.btn-danger {
+    padding: 10px 30px 10px 30px;
+    float: right;
+}
