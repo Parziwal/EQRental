@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { AuthorizeService } from 'src/api-authorization/authorize.service';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
   isAuthenticated = false;
+  logoUrl = environment.apiUrl.substring(0, environment.apiUrl.lastIndexOf('api/')) + 'Images/Logo/EQ_Rental_logo.png'
 
   collapse() {
     this.isExpanded = false;
