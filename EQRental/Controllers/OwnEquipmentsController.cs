@@ -55,7 +55,7 @@ namespace EQRental.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<EquipmentOverviewDTO>> PostEquipment(EquipmentPostDTO equipment)
+        public async Task<ActionResult<EquipmentOverviewDTO>> PostEquipment([FromForm] EquipmentPostDTO equipment)
         {
             var category = await (from c in context.Categories
                                   where c.Name == equipment.Category
@@ -102,7 +102,7 @@ namespace EQRental.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEquipment(int id, EquipmentPostDTO equipment)
+        public async Task<IActionResult> PutEquipment(int id, [FromForm] EquipmentPostDTO equipment)
         {
             var category = await (from c in context.Categories
                                   where c.Name == equipment.Category
@@ -136,18 +136,20 @@ namespace EQRental.Controllers
         private async Task<string> GenerateFilePath(IFormFile file)
         {
             string uniqueFileName = null;
+            string relativeFilePath = null;
 
             if (file != null)
             {
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images", "Equipments");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                uniqueFileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                relativeFilePath = Path.Combine("Images", "Equipments", uniqueFileName);
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
                 }
             }
-            return uniqueFileName;
+            return relativeFilePath;
         }
     }
 }
