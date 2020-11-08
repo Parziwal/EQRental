@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -15,6 +15,10 @@ import { ErrorComponent } from './error/error.component';
 import { RentedEquipmentsListComponent } from './rented-equipments/rented-equipments-list/rented-equipments-list.component';
 import { RentedEquipmentDetailsComponent } from './rented-equipments/rented-equipment-details/rented-equipment-details.component';
 import { RentedEquipmentsComponent } from './rented-equipments/rented-equipments.component';
+import { RentalListComponent } from './rental/rental-list/rental-list.component';
+import { CategoryListComponent } from './rental/rental-list/category-list/category-list.component';
+import { RentalEquipmentDetailsComponent } from './rental/rental-equipment-details/rental-equipment-details.component';
+import { RentEquipmentComponent } from './rental/rental-equipment-details/rent-equipment/rent-equipment.component';
 
 @NgModule({
   declarations: [
@@ -26,13 +30,18 @@ import { RentedEquipmentsComponent } from './rented-equipments/rented-equipments
     ErrorComponent,
     RentedEquipmentsComponent,
     RentedEquipmentsListComponent,
-    RentedEquipmentDetailsComponent
+    RentedEquipmentDetailsComponent,
+    RentalListComponent,
+    CategoryListComponent,
+    RentalEquipmentDetailsComponent,
+    RentEquipmentComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     ApiAuthorizationModule
   ],
   providers: [

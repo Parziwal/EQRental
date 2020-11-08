@@ -4,6 +4,9 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 
 import { HomeComponent } from './home/home.component';
 import { MyEquipmentsComponent } from './my-equipments/my-equipments.component';
+import { RentEquipmentComponent } from './rental/rental-equipment-details/rent-equipment/rent-equipment.component';
+import { RentalEquipmentDetailsComponent } from './rental/rental-equipment-details/rental-equipment-details.component';
+import { RentalListComponent } from './rental/rental-list/rental-list.component';
 import { RentalComponent } from './rental/rental.component';
 import { RentedEquipmentDetailsComponent } from './rented-equipments/rented-equipment-details/rented-equipment-details.component';
 import { RentedEquipmentsListComponent } from './rented-equipments/rented-equipments-list/rented-equipments-list.component';
@@ -11,13 +14,17 @@ import { RentedEquipmentsComponent } from './rented-equipments/rented-equipments
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'rental', component: RentalComponent, canActivate: [AuthorizeGuard] },
+  { path: 'rental', component: RentalComponent, canActivate: [AuthorizeGuard], children: [
+    {path: '', component: RentalListComponent},
+    {path: ':id', component: RentalEquipmentDetailsComponent},
+    {path: ':id/rent', component: RentEquipmentComponent},
+  ] },
   { path: 'my-equipments', component: MyEquipmentsComponent, canActivate: [AuthorizeGuard] },
   { path: 'rented-equipments', component: RentedEquipmentsComponent, canActivate: [AuthorizeGuard], children: [
     {path: '', component: RentedEquipmentsListComponent},
     {path: ':id', component: RentedEquipmentDetailsComponent}
   ]},
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

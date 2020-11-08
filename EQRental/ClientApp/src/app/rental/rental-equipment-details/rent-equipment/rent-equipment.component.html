@@ -1,0 +1,56 @@
+<div class="row justify-content-md-center">
+    <div class="col-6">
+        <div class="row">
+            <h2>{{equipment?.name}}</h2>
+        </div>
+        <form [formGroup]="rentalForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <select class="form-control" id="address" formControlName="addressId">
+                            <option *ngFor="let address of addresses" [value]="address.id">
+                                {{address.postalCode}} - {{address.city}}: {{address.street}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="startDate">Start date</label>
+                        <input type="datetime-local" class="form-control" id="startDate" formControlName="startDate">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="endDate">End date</label>
+                        <input type="datetime-local" class="form-control" id="endDate" formControlName="endDate">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="payment">Payment</label>
+                        <select class="form-control" id="payment" formControlName="paymentMethod">
+                            <option *ngFor="let payment of payments" [value]="payment">
+                                {{payment}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success" [disabled]="rentalForm.invalid">Save</button>
+                    <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

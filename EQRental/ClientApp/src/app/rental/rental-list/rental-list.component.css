@@ -1,0 +1,11 @@
+#currency {
+    font-size: large;
+    font-weight: lighter;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-top: 20px;
+}
+
+#category {
+    margin-top: -20px;
+    margin-bottom: -3px;
+}
