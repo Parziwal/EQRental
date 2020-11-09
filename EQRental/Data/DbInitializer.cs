@@ -95,7 +95,19 @@ namespace EQRental.Data
                         Available=true, Category=categories[3], Owner=users[0]},
                     new Equipment{Name="Nasjac BBQ Barbecue Tool Set", PricePerDay=2000,
                         Details=@"20 pieces of barbecue set, including 8 food fork, 7 skewer, 1 wire cleaning brush, 1 oil brush, 1 grill clamp, 1 roasted spatula, 1 fork grill. The kit contains all the tools you need for a barbecue.",
-                        Available=true, Category=categories[3], Owner=users[1]}
+                        Available=true, Category=categories[3], Owner=users[1]},
+                    new Equipment{Name="McCulloch MC1385 Deluxe Canister Steam Cleaner", PricePerDay=10000,
+                        Details=@"Naturally deep clean and sanitize without the use of harsh chemicals using hot, pressured steam to eliminate grease, grime, stains, and mold from a wide range of surfaces including ceramic tile, grout, granite, sealed wood flooring, laminate, appliances, grills, autos, and more.",
+                        Available=true, Category=categories[1], Owner=users[2]},
+                    new Equipment{Name="14 Inch Metal Bed Frame / No Box Spring Needed / Sturdy Steel Frame", PricePerDay=5000,
+                        Details=@"Strong and Durable Steel, Imported Stuff.",
+                        Available=true, Category=categories[2], Owner=users[2]},
+                    new Equipment{Name="HomePop Velvet Swoop Arm Accent Chair, Teal", PricePerDay=14000,
+                        Details=@"This elegant accent chair features a slightly curved back and side swoop arms for extra comfort and added design",
+                        Available=true, Category=categories[2], Owner=users[2]},
+                    new Equipment{Name="Coleman Powersports CT100U Gas Powered Trail Mini-Bike", PricePerDay=2000,
+                        Details=@"POWERFUL & EFFICIENT: The 4 stroke OHV 1 cylinder engine with 98cc/3.0HP, will power you through the trails all day with plenty of muscle while still being fuel efficient | Max Speed: 20 mph",
+                        Available=true, Category=categories[5], Owner=users[3]}
                 };
 
                 context.Equipments.AddRange(equipments);

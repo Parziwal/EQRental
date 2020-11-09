@@ -1,0 +1,9 @@
+<div class="list-group">
+  <a *ngFor="let equipment of equipments" routerLinkActive="active" [routerLink]="[equipment.id]" class="list-group-item list-group-item-action">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{equipment?.name}}</h5>
+      <p id="currency">{{ equipment.pricePerDay | number}} FT / DAY</p>
+    </div>
+    <p id="category">{{ equipment.category }}</p>
+  </a>
+</div>

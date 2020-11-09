@@ -4,6 +4,8 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 
 import { HomeComponent } from './home/home.component';
 import { MyEquipmentsComponent } from './my-equipments/my-equipments.component';
+import { MyEquipmentsDetailsComponent } from './my-equipments/my-equipment-details/my-equipment-details.component';
+import { MyEquipmentsListComponent } from './my-equipments/my-equipments-list/my-equipments-list.component';
 import { RentEquipmentComponent } from './rental/rental-equipment-details/rent-equipment/rent-equipment.component';
 import { RentalEquipmentDetailsComponent } from './rental/rental-equipment-details/rental-equipment-details.component';
 import { RentalListComponent } from './rental/rental-list/rental-list.component';
@@ -19,7 +21,10 @@ const routes: Routes = [
     {path: ':id', component: RentalEquipmentDetailsComponent},
     {path: ':id/rent', component: RentEquipmentComponent},
   ] },
-  { path: 'my-equipments', component: MyEquipmentsComponent, canActivate: [AuthorizeGuard] },
+  { path: 'my-equipments', component: MyEquipmentsComponent, canActivate: [AuthorizeGuard], children: [
+    { path: '', component: MyEquipmentsListComponent },
+    { path: ':id', component: MyEquipmentsDetailsComponent }
+  ]},
   { path: 'rented-equipments', component: RentedEquipmentsComponent, canActivate: [AuthorizeGuard], children: [
     {path: '', component: RentedEquipmentsListComponent},
     {path: ':id', component: RentedEquipmentDetailsComponent}

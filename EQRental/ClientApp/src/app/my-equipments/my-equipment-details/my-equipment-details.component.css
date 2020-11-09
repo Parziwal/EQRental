@@ -1,0 +1,42 @@
+#image-not-found {
+  background-color: rgb(163, 163, 163);
+  color: white;
+  width: 200px;
+  height: 300px;
+  font-size: 20em;
+  text-align: center;
+  line-height: 80%;
+  border-radius: 10px;
+}
+
+#name {
+  font-size: xx-large;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#price {
+  font-size: x-large;
+  margin: 20px 0px -15px 0px;
+}
+
+.label {
+  font-size: large;
+  font-weight: bolder;
+  margin: 40px 20px 20px 20px;
+}
+
+#description-content {
+  margin: 0px 25px 20px 25px;
+  padding: 10px 10px 10px 20px;
+  background-color: rgb(209, 209, 209);
+  border: 2px solid rgb(173, 173, 173);
+  border-radius: 15px;
+}
+
+#back {
+  font-size: large;
+  margin: 20px 0px 40px 20px;
+  padding: 10px 40px 10px 40px;
+  border-radius: 25px;
+}
