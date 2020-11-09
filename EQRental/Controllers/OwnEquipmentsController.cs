@@ -71,7 +71,7 @@ namespace EQRental.Controllers
             equipmentModel.Details = equipment.Details;
             equipmentModel.ImagePath = GenerateFilePath(equipment.Image).Result;
             equipmentModel.PricePerDay = equipment.PricePerDay;
-            equipmentModel.Available = equipment.Available;
+            equipmentModel.Available = true;
             equipmentModel.OwnerID = userId;
             equipmentModel.CategoryID = category.ID;
 
@@ -125,7 +125,7 @@ namespace EQRental.Controllers
             equipmentModel.Details = equipment.Details;
             equipmentModel.ImagePath = GenerateFilePath(equipment.Image).Result;
             equipmentModel.PricePerDay = equipment.PricePerDay;
-            equipmentModel.Available = equipment.Available;
+            equipmentModel.Available = true;
             equipmentModel.CategoryID = category.ID;
 
             await context.SaveChangesAsync();
