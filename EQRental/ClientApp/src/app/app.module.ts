@@ -10,6 +10,9 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { RentalComponent } from './rental/rental.component';
 import { MyEquipmentsComponent } from './my-equipments/my-equipments.component';
+import { MyEquipmentsListComponent } from './my-equipments/my-equipments-list/my-equipments-list.component';
+import { MyEquipmentsDetailsComponent } from './my-equipments/my-equipment-details/my-equipment-details.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { ErrorComponent } from './error/error.component';
 import { RentedEquipmentsListComponent } from './rented-equipments/rented-equipments-list/rented-equipments-list.component';
@@ -27,6 +30,8 @@ import { RentEquipmentComponent } from './rental/rental-equipment-details/rent-e
     HomeComponent,
     RentalComponent,
     MyEquipmentsComponent,
+    MyEquipmentsListComponent,
+    MyEquipmentsDetailsComponent,
     ErrorComponent,
     RentedEquipmentsComponent,
     RentedEquipmentsListComponent,
