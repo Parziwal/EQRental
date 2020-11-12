@@ -13,7 +13,6 @@ namespace EQRental.Models.DTO
         //public string ImagePath { get; set; }
         public IFormFile Image { get; set; }
         public int PricePerDay { get; set; }
-        public bool Available { get; set; }
         public string Category { get; set; }
     }
 }
