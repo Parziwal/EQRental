@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using EQRental.Data;
 using EQRental.Models;
 using EQRental.Models.DTO;
+using EQRental.Models.Params;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 
 namespace EQRental.Controllers
@@ -30,6 +32,20 @@ namespace EQRental.Controllers
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var equipments = from e in context.Equipments
                              where e.Owner.Id != userId
+                             select new EquipmentOverviewDTO(e, e.Category);
+            var ret = await equipments.ToListAsync();
+            if (ret == null)
+                return NotFound();
+            return ret;
+        }
+
+        [Route("category")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EquipmentOverviewDTO>>> GetByCategory([FromBody] CategoryFilter categories)
+        {
+            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var equipments = from e in context.Equipments
+                             where e.Owner.Id != userId && categories.Categories.Contains(e.Category.Name) 
                              select new EquipmentOverviewDTO(e, e.Category);
             var ret = await equipments.ToListAsync();
             if (ret == null)
