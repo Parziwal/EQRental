@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-4">
-    <div id="image-not-found" *ngIf="!equipment?.imagePath">?</div>
-    <img *ngIf="equipment?.imagePath" [src]="equipment?.imagePath" [alt]="equipment?.name" width="200px">
+    <span id="image-not-found" *ngIf="!equipment?.imagePath"><span>?</span></span>
+    <img id="equipment-img" class="img-fluid" *ngIf="equipment?.imagePath" [src]="equipment?.imagePath" [alt]="equipment?.name">
   </div>
   <div class="col-8">
     <div class="row">
