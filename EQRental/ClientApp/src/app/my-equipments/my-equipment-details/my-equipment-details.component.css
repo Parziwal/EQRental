@@ -1,12 +1,18 @@
 #image-not-found {
+  display: inline-block;
   background-color: rgb(163, 163, 163);
   color: white;
   width: 200px;
   height: 300px;
-  font-size: 20em;
   text-align: center;
-  line-height: 80%;
   border-radius: 10px;
+}
+
+#image-not-found span {
+  display: inline-block;
+  font-size: 20em;
+  font-family: 'Times New Roman';
+  line-height: 100%;
 }
 
 #name {

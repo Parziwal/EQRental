@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-4">
-        <div id="image-not-found" *ngIf="!equipment?.imagePath">?</div>
+        <span id="image-not-found" *ngIf="!equipment?.imagePath"><span>?</span></span>
         <img *ngIf="equipment?.imagePath" [src]="equipment?.imagePath" [alt]="equipment?.name" width="200px">
     </div>
     <div class="col-8">

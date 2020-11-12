@@ -28,7 +28,6 @@ export class RentEquipmentComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        this.initForm();
         this.rentalService.getRentalEquipment(this.id).subscribe(
           (equipmentData) => {
             this.equipment = equipmentData;
@@ -36,14 +35,18 @@ export class RentEquipmentComponent implements OnInit {
         );
       }
     );
+
+    this.initForm();
     this.addressService.getAddresses().subscribe(
       (addressData: Address[]) => {
         this.addresses = addressData;
+        this.rentalForm.get('addressId').setValue(this.addresses[0].id);
       }
     );
     this.paymentService.getPayments().subscribe(
       (paymentData: string[]) => {
         this.payments = paymentData;
+        this.rentalForm.get('paymentMethod').setValue(this.payments[0]);
       }
     );
   }
