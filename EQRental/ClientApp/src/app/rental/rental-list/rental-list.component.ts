@@ -14,11 +14,28 @@ export class RentalListComponent implements OnInit {
   constructor(private rentalService: RentalService) { }
 
   ngOnInit() {
-    this.rentalService.getRentalEquipments().subscribe(
+    this.rentalService.getAllRentalEquipments().subscribe(
       (equipmentsData: EquipmentOverview[]) => {
         this.equipments = equipmentsData;
       }
     );
-  }
 
+    this.rentalService.filterChanged.subscribe(
+      (categories: string[]) => {
+        if (categories.length === 0) {
+          this.rentalService.getAllRentalEquipments().subscribe(
+            (equipmentsData: EquipmentOverview[]) => {
+              this.equipments = equipmentsData;
+            }
+          );
+        } else {
+          this.rentalService.getRentalEquipmentsByCategory(categories).subscribe(
+            (equipmentsData: EquipmentOverview[]) => {
+              this.equipments = equipmentsData;
+            }
+          );
+        }
+      }
+    );
+  }
 }

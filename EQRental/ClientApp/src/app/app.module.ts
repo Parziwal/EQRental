@@ -19,7 +19,7 @@ import { RentedEquipmentsListComponent } from './rented-equipments/rented-equipm
 import { RentedEquipmentDetailsComponent } from './rented-equipments/rented-equipment-details/rented-equipment-details.component';
 import { RentedEquipmentsComponent } from './rented-equipments/rented-equipments.component';
 import { RentalListComponent } from './rental/rental-list/rental-list.component';
-import { CategoryListComponent } from './rental/rental-list/category-list/category-list.component';
+import { CategoryListComponent } from './rental/category-list/category-list.component';
 import { RentalEquipmentDetailsComponent } from './rental/rental-equipment-details/rental-equipment-details.component';
 import { RentEquipmentComponent } from './rental/rental-equipment-details/rent-equipment/rent-equipment.component';
 
