@@ -41,11 +41,11 @@ namespace EQRental.Controllers
 
         [Route("category")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EquipmentOverviewDTO>>> GetByCategory([FromBody] CategoryFilter categories)
+        public async Task<ActionResult<IEnumerable<EquipmentOverviewDTO>>> GetByCategory([FromQuery] string[] categories)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var equipments = from e in context.Equipments
-                             where e.Owner.Id != userId && categories.Categories.Contains(e.Category.Name) 
+                             where e.Owner.Id != userId && categories.Contains(e.Category.Name) 
                              select new EquipmentOverviewDTO(e, e.Category);
             var ret = await equipments.ToListAsync();
             if (ret == null)
