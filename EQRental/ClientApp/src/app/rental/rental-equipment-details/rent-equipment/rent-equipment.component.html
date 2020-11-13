@@ -20,7 +20,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="startDate">Start date</label>
-                        <input type="datetime-local" class="form-control" id="startDate" formControlName="startDate">
+                        <input type="datetime-local" class="form-control" id="startDate" formControlName="startDate" (change)="refreshSubtotal()">
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="endDate">End date</label>
-                        <input type="datetime-local" class="form-control" id="endDate" formControlName="endDate">
+                        <input type="datetime-local" class="form-control" id="endDate" formControlName="endDate" (change)="refreshSubtotal()">
                     </div>
                 </div>
             </div>
@@ -42,6 +42,11 @@
                             </option>
                         </select>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h3>Subtotal: {{ subTotal | number }} Ft</h3>
                 </div>
             </div>
             <hr>
