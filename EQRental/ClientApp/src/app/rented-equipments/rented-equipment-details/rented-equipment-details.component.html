@@ -36,8 +36,8 @@
           <td>{{rental?.equipment.category}}</td>
           <td>{{rental?.startDate | date:'shortDate'}}</td>
           <td>{{rental?.endDate | date:'shortDate' }}</td>
-          <td>{{rental?.equipment.pricePerDay}}</td>
-          <td>{{subTotal}}</td>
+          <td>{{rental?.equipment.pricePerDay | number}} Ft</td>
+          <td>{{subTotal | number}} Ft</td>
         </tr>
       </table>
 </div>
