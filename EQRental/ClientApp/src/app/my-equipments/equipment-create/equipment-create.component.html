@@ -1,0 +1,47 @@
+<mat-card>
+    <mat-card-title>Equipment</mat-card-title>
+    <form [formGroup]="equipmentForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <input matInput type="text" formControlName="name" placeholder="Name">
+            <mat-error *ngIf="equipmentForm.get('name').invalid">Please enter a name!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Details</mat-label>
+            <textarea matInput formControlName="details"></textarea>
+            <mat-error *ngIf="equipmentForm.get('details').invalid">Please write some detail!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Price (Ft/Day):</mat-label>
+            <input matInput type="number" class="price-right-align" formControlName="pricePerDay">
+            <span matSuffix>Ft</span>
+            <mat-error *ngIf="equipmentForm.get('pricePerDay').invalid">Please enter a price!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Category</mat-label>
+            <mat-select id="category" formControlName="category">
+                <mat-option *ngFor="let category of categories" [value]="category">
+                    {{category}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="equipmentForm.get('category').invalid">Please choose a category!</mat-error>
+        </mat-form-field>
+        <div>
+            <button class="btn btn-primary" type="button" (click)="filePicker.click()">Pick Image</button>
+            <input type="file" #filePicker (change)="onImagePicked($event)">
+        </div>
+        <div class="image-preview" *ngIf="imagePreview && imagePreview !== '' && equipmentForm.get('image').valid">
+            <img [src]="imagePreview" [alt]="equipmentForm.value.name">
+        </div>
+        <mat-error *ngIf="equipmentForm.get('image').invalid && equipmentForm.get('image').touched">Please pick an image!</mat-error>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-success" [disabled]="equipmentForm.invalid">Save</button>
+                <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</mat-card>

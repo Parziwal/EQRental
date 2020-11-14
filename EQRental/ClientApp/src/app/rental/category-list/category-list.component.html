@@ -11,9 +11,9 @@
       <tr *ngFor="let category of categories; let i = index">
         <th scope="row">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" [value]="category" [id]="'category_'+ i">
+                <input class="form-check-input" type="checkbox" [value]="i" [id]="'category_'+ i" (change)="onFilterChange(i)">
                 <label class="form-check-label" [for]="'category_'+ i">
-                  {{ category }}
+                  {{ category.name }}
                 </label>
             </div>
         </th>

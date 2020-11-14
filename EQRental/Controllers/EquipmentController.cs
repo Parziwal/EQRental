@@ -64,13 +64,13 @@ namespace EQRental.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Equipment>> PostEquipment(RentalOrderDTO order)
+        public async Task<ActionResult<int>> PostEquipment(RentalOrderDTO order)
         {
             Rental _rental = await RentalOrderToRental(order);
             context.Rentals.Add(_rental);
             await context.SaveChangesAsync();
 
-            return NoContent();
+            return CreatedAtAction("rentalId", _rental.ID);
         }
 
         private async Task<Rental> RentalOrderToRental(RentalOrderDTO order)

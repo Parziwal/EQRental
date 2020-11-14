@@ -26,4 +26,24 @@ export class RentedEquipmentsListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.rentalSub.unsubscribe();
   }
+
+  getStatusStyleClass(status: string) {
+    switch(status) {
+      case 'PROCESSING': {
+        return 'processing';
+      }
+      case 'PREPARING TO SHIP': {
+        return 'preparing';
+      }
+      case 'UNDER DELIVERING': {
+        return 'delivering';
+      }
+      case 'DELIVERED': {
+        return 'delivered';
+      }
+      case 'CANCELED': {
+        return 'canceled';
+      }
+    }
+  }
 }

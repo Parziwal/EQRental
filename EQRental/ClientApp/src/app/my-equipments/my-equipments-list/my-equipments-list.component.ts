@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EquipmentOverview } from '../../shared/models/equipment-overview.model';
 import { MyEquipmentsService } from '../my-equipments.service';
@@ -12,7 +13,9 @@ export class MyEquipmentsListComponent implements OnInit {
   equipments: EquipmentOverview[] = [];
   private equipmentSub: Subscription;
 
-  constructor(private myEquipmentsService: MyEquipmentsService) { }
+  constructor(private myEquipmentsService: MyEquipmentsService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.myEquipmentsService.getEquipments().subscribe(
@@ -20,6 +23,10 @@ export class MyEquipmentsListComponent implements OnInit {
         this.equipments = equipmentsData;
       }
     );
+  }
+
+  onAddEquipment() {
+    this.router.navigate(['create'], {relativeTo: this.route});
   }
 }
 

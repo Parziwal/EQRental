@@ -28,8 +28,8 @@ export class RentedEquipmentDetailsComponent implements OnInit {
           (rentalData) => {
             this.rental = rentalData;
 
-            const days = new Date(rentalData.endDate).getDay() - new Date(rentalData.startDate).getDay();
-            this.subTotal = days * rentalData.equipment.pricePerDay;
+            const days = new Date(rentalData.endDate).getTime() - new Date(rentalData.startDate).getTime();
+            this.subTotal = new Date(days).getDate() * rentalData.equipment.pricePerDay;
 
             this.setStatus(rentalData.status);
           }

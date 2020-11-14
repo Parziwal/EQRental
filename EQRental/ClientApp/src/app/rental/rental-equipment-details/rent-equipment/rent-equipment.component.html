@@ -1,56 +1,46 @@
-<div class="row justify-content-md-center">
-    <div class="col-6">
+<mat-card>
+    <mat-card-title>{{equipment?.name}}</mat-card-title>
+    <form [formGroup]="rentalForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <mat-select formControlName="addressId">
+                <mat-option *ngFor="let address of addresses" [value]="address.id">
+                    {{address.postalCode}} - {{address.city}}: {{address.street}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="rentalForm.get('addressId').invalid">Please choose an address!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <input matInput type="datetime-local" formControlName="startDate" placeholder="Start date" (change)="refreshSubtotal()">
+            <mat-error *ngIf="rentalForm.get('startDate').invalid">Please enter a start date!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <input matInput type="datetime-local" formControlName="endDate" placeholder="End date" (change)="refreshSubtotal()">
+            <mat-error *ngIf="rentalForm.get('endDate').invalid">Please enter a end date!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Payment</mat-label>
+            <mat-select formControlName="paymentMethod">
+                <mat-option *ngFor="let payment of payments" [value]="payment">
+                    {{payment}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="rentalForm.get('paymentMethod').invalid">Please choose a payment!</mat-error>
+        </mat-form-field>
         <div class="row">
-            <h2>{{equipment?.name}}</h2>
+            <div class="col-12">
+                <h3>Subtotal: {{ subTotal | number }} Ft</h3>
+            </div>
         </div>
-        <form [formGroup]="rentalForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <select class="form-control" id="address" formControlName="addressId">
-                            <option *ngFor="let address of addresses" [value]="address.id">
-                                {{address.postalCode}} - {{address.city}}: {{address.street}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-success" [disabled]="rentalForm.invalid">Save</button>
+                <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="startDate">Start date</label>
-                        <input type="datetime-local" class="form-control" id="startDate" formControlName="startDate">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="endDate">End date</label>
-                        <input type="datetime-local" class="form-control" id="endDate" formControlName="endDate">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="payment">Payment</label>
-                        <select class="form-control" id="payment" formControlName="paymentMethod">
-                            <option *ngFor="let payment of payments" [value]="payment">
-                                {{payment}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-success" [disabled]="rentalForm.invalid">Save</button>
-                    <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
+    </form>
+</mat-card>

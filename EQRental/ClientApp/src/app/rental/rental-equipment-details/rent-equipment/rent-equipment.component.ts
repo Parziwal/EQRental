@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Address } from 'src/app/shared/models/address.model';
@@ -17,6 +17,7 @@ export class RentEquipmentComponent implements OnInit {
   equipment: Equipment;
   addresses: Address[];
   payments: string[];
+  subTotal = 0;
   rentalForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -62,11 +63,23 @@ export class RentEquipmentComponent implements OnInit {
 
   onSubmit() {
     const rental = {equipmentId: this.id, ...this.rentalForm.value, addressId: +this.rentalForm.value.addressId};
-    this.rentalService.postRental(rental).subscribe();
-    this.onCancel();
+    this.rentalService.postRental(rental).subscribe(
+      (response) => {
+        this.router.navigate(['rented-equipments', response]);
+      }
+    );
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['rented-equipments']);
+  }
+
+  refreshSubtotal() {
+    const days = new Date(this.rentalForm.value.endDate).getTime() - new Date(this.rentalForm.value.startDate).getTime();
+    if (days > 0) {
+      this.subTotal = new Date(days).getDate() * this.equipment.pricePerDay;
+    } else {
+      this.subTotal = 0;
+    }
   }
 }
