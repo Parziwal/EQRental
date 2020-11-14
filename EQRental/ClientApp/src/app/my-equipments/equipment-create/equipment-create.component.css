@@ -1,0 +1,43 @@
+input[type="file"] {
+    visibility: hidden;
+}
+
+.image-preview {
+    height: 8rem;
+    margin: 1rem 0;
+}
+
+.image-preview img {
+    height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+mat-form-field,
+textarea {
+    width: 100%;
+    margin: 10px;
+}
+
+mat-card {
+    max-width: 500px;
+    margin: auto;
+}
+
+.price-right-align {
+    text-align: right;
+}
+
+.btn.btn-success {
+    padding: 10px 30px 10px 30px;
+}
+
+.btn.btn-danger {
+    padding: 10px 30px 10px 30px;
+    float: right;
+}

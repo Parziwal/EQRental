@@ -55,7 +55,7 @@ namespace EQRental.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<EquipmentOverviewDTO>> PostEquipment([FromForm] EquipmentPostDTO equipment)
+        public async Task<ActionResult<int>> PostEquipment([FromForm] EquipmentPostDTO equipment)
         {
             var category = await (from c in context.Categories
                                   where c.Name == equipment.Category
@@ -78,8 +78,7 @@ namespace EQRental.Controllers
             context.Equipments.Add(equipmentModel);
             await context.SaveChangesAsync();
 
-            var equipmentOverview = new EquipmentOverviewDTO(equipmentModel, equipmentModel.Category);
-            return CreatedAtAction("GetEquipment", equipmentOverview);
+            return CreatedAtAction("equipmentId", equipmentModel.ID);
         }
 
         [HttpDelete("{id}")]

@@ -22,6 +22,13 @@ import { RentalListComponent } from './rental/rental-list/rental-list.component'
 import { CategoryListComponent } from './rental/category-list/category-list.component';
 import { RentalEquipmentDetailsComponent } from './rental/rental-equipment-details/rental-equipment-details.component';
 import { RentEquipmentComponent } from './rental/rental-equipment-details/rent-equipment/rent-equipment.component';
+import { EquipmentCreateComponent } from './my-equipments/equipment-create/equipment-create.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -39,7 +46,8 @@ import { RentEquipmentComponent } from './rental/rental-equipment-details/rent-e
     RentalListComponent,
     CategoryListComponent,
     RentalEquipmentDetailsComponent,
-    RentEquipmentComponent
+    RentEquipmentComponent,
+    EquipmentCreateComponent
   ],
   imports: [
     AppRoutingModule,
@@ -47,7 +55,12 @@ import { RentEquipmentComponent } from './rental/rental-equipment-details/rent-e
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ApiAuthorizationModule
+    ApiAuthorizationModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatSelectModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
