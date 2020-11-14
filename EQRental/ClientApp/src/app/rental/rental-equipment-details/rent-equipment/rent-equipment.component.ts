@@ -63,8 +63,11 @@ export class RentEquipmentComponent implements OnInit {
 
   onSubmit() {
     const rental = {equipmentId: this.id, ...this.rentalForm.value, addressId: +this.rentalForm.value.addressId};
-    this.rentalService.postRental(rental).subscribe();
-    this.onCancel();
+    this.rentalService.postRental(rental).subscribe(
+      (response) => {
+        this.router.navigate(['rented-equipments', response]);
+      }
+    );
   }
 
   onCancel() {
