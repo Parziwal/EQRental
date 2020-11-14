@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using EQRental.Data;
 using EQRental.Models;
 using EQRental.Models.DTO;
-using EQRental.Models.Params;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
