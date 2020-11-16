@@ -29,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
