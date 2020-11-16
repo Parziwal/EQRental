@@ -23,3 +23,24 @@
 <div class="row">
   <button id="back" type="button" class="btn btn-success" (click)="onClickBack()">Back</button>
 </div>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h5 class="mb-1">Equipment Orders</h5>
+    </mat-panel-title>
+    <mat-panel-description>
+      Click
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="list-group">
+    <a *ngFor="let rental of equipment.rentals" routerLinkActive="active" [routerLink]="[rental.id]" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">Details</h5>
+        <p id="currency">Name: {{rental?.rentler.name}}</p>
+        <small>Start Date: {{ rental?.startDate | date:'medium' }}</small>
+        <p id="currency">Payment Method: {{ rental?.paymentMethod}}</p>
+        <p id="currency">Status: {{ rental?.status}}</p>
+      </div>
+    </a>
+  </div>
+</mat-expansion-panel>

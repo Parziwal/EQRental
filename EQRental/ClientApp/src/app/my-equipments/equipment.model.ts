@@ -1,4 +1,4 @@
-import { User } from '../shared/models/user.model';
+import { Rental } from '../shared/models/rental.model';
 
 export interface Equipment {
   id: number;
@@ -8,5 +8,5 @@ export interface Equipment {
   pricePerDay: string;
   avalilable: boolean;
   category: string;
-  owner: User;
+  rentals: Array<Rental>;
 }

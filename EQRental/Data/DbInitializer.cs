@@ -122,9 +122,19 @@ namespace EQRental.Data
                 var rentals = new Rental[]
                 {
                     new Rental{ Equipment=equipments[0], OrderDate=new DateTime(2020, 10, 20, 12, 40, 2), StartDate=new DateTime(2020, 11, 1), EndDate=new DateTime(2020, 11, 7),
-                    Address=addresses[2], Payment=payments[0], Status=statuses[1] },
+                    Address=addresses[0], Payment=payments[0], Status=statuses[1] },
                     new Rental{ Equipment=equipments[1], OrderDate=new DateTime(2020, 10, 22, 17, 55, 2), StartDate=new DateTime(2020, 11, 10), EndDate=new DateTime(2020, 11, 13),
-                    Address=addresses[2], Payment=payments[1], Status=statuses[0] }
+                    Address=addresses[2], Payment=payments[1], Status=statuses[0] },
+                    new Rental{ Equipment=equipments[2], OrderDate=new DateTime(2020, 11, 09, 10, 10, 2), StartDate=new DateTime(2020, 11, 11), EndDate=new DateTime(2020, 11, 14),
+                    Address=addresses[2], Payment=payments[1], Status=statuses[0] },
+                    new Rental{ Equipment=equipments[3], OrderDate=new DateTime(2020, 11, 10, 10, 10, 2), StartDate=new DateTime(2020, 11, 11), EndDate=new DateTime(2020, 11, 14),
+                    Address=addresses[3], Payment=payments[1], Status=statuses[0] },
+                    new Rental{ Equipment=equipments[4], OrderDate=new DateTime(2020, 11, 11, 10, 10, 2), StartDate=new DateTime(2020, 11, 12), EndDate=new DateTime(2020, 11, 17),
+                    Address=addresses[3], Payment=payments[1], Status=statuses[0] },
+                    new Rental{ Equipment=equipments[2], OrderDate=new DateTime(2020, 11, 11, 10, 10, 2), StartDate=new DateTime(2020, 11, 12), EndDate=new DateTime(2020, 11, 17),
+                    Address=addresses[0], Payment=payments[1], Status=statuses[0] },
+                    new Rental{ Equipment=equipments[5], OrderDate=new DateTime(2020, 11, 12, 10, 10, 2), StartDate=new DateTime(2020, 11, 13), EndDate=new DateTime(2020, 11, 20),
+                    Address=addresses[1], Payment=payments[1], Status=statuses[0] }
                 };
 
                 context.Rentals.AddRange(rentals);
