@@ -57,90 +57,86 @@ namespace EQRental.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> PostEquipment([FromForm] EquipmentPostDTO equipment)
         {
-            var category = await (from c in context.Categories
-                                  where c.Name == equipment.Category
-                                  select c).SingleOrDefaultAsync();
-            if (category == null)
-            {
-                return BadRequest();
-            }
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            if (!context.Categories.Any(c => c.Name == equipment.Category))
+            {
+                return BadRequest("You must define the category!");
+            }
 
             var equipmentModel = new Equipment();
             equipmentModel.Name = equipment.Name;
             equipmentModel.Details = equipment.Details;
-            equipmentModel.ImagePath = GenerateFilePath(equipment.Image).Result;
+            equipmentModel.ImagePath = await GenerateFilePath(equipment.Image);
             equipmentModel.PricePerDay = equipment.PricePerDay;
             equipmentModel.Available = true;
             equipmentModel.OwnerID = userId;
-            equipmentModel.CategoryID = category.ID;
+            equipmentModel.CategoryID = (await context.Categories.FirstAsync(c => c.Name == equipment.Category)).ID;
 
             context.Equipments.Add(equipmentModel);
             await context.SaveChangesAsync();
 
-            return CreatedAtAction("equipmentId", equipmentModel.ID);
+            var equipmentOverview = new EquipmentOverviewDTO(equipmentModel, equipmentModel.Category);
+            return CreatedAtAction("GetEquipment", equipmentOverview);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEquipment(int id)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var deleteItem = await (from item in context.Equipments
-                                    where item.ID == id && userId == item.OwnerID
-                                    select item).SingleOrDefaultAsync();
-
+            var deleteItem = await context.Equipments.FirstOrDefaultAsync(e => e.ID == id && userId == e.OwnerID);
             if (deleteItem == null)
             {
-                return NotFound();
+                return NotFound("Could not find equipment with the given id\nor you do not own the equipment.");
             }
+
+            string fullImagePath = Path.Combine(webHostEnvironment.WebRootPath, deleteItem.ImagePath);
+            if (System.IO.File.Exists(fullImagePath))
+                System.IO.File.Delete(fullImagePath);
 
             context.Equipments.Remove(deleteItem);
             await context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Equipment successfully deleted");
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEquipment(int id, [FromForm] EquipmentPostDTO equipment)
         {
-            var category = await (from c in context.Categories
-                                  where c.Name == equipment.Category
-                                  select c).SingleOrDefaultAsync();
-            if (category == null)
+            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            if (!context.Categories.Any(c => c.Name == equipment.Category))
             {
-                return BadRequest();
+                return BadRequest("You must define the category!");
             }
 
             var equipmentModel = await (from e in context.Equipments
-                                        where e.ID == id
+                                        where e.ID == id && userId == e.OwnerID
                                         select e).SingleOrDefaultAsync();
 
             if (equipmentModel == null)
             {
-                return NotFound();
+                return NotFound("Could not find equipment with the given id\nor you do not own the equipment.");
             }
 
             equipmentModel.Name = equipment.Name;
             equipmentModel.Details = equipment.Details;
-            equipmentModel.ImagePath = GenerateFilePath(equipment.Image).Result;
+            equipmentModel.ImagePath = (await GenerateFilePath(equipment.Image));
             equipmentModel.PricePerDay = equipment.PricePerDay;
             equipmentModel.Available = true;
-            equipmentModel.CategoryID = category.ID;
+            equipmentModel.CategoryID = (await context.Categories.FirstAsync(c => c.Name == equipment.Category)).ID;
 
             await context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Changes saved!");
         }
 
         private async Task<string> GenerateFilePath(IFormFile file)
         {
-            string uniqueFileName = null;
             string relativeFilePath = null;
 
             if (file != null)
             {
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "Images", "Equipments");
-                uniqueFileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string uniqueFileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 relativeFilePath = Path.Combine("Images", "Equipments", uniqueFileName);
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
