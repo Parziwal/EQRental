@@ -63,6 +63,9 @@ namespace EQRental.Controllers
                 return BadRequest("You must define the category!");
             }
 
+            if (!(equipment.Image.Length > 0 && equipment.Image.ContentType.Contains("image")))
+                return BadRequest("Uploaded file is not image.");
+
             var equipmentModel = new Equipment();
             equipmentModel.Name = equipment.Name;
             equipmentModel.Details = equipment.Details;
