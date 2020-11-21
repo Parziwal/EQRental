@@ -27,8 +27,7 @@ namespace EQRental.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> GetCategories()
         {
-            var categories = await (from c in context.Categories
-                                    select c.Name).ToListAsync();
+            var categories = (await context.Categories.Select(p => p.Name).ToListAsync());
             return categories;
         }
     }

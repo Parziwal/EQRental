@@ -27,8 +27,7 @@ namespace EQRental.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> GetPayments()
         {
-            var payments = await (from p in context.Payments
-                                  select p.Name).ToListAsync();
+            var payments = (await context.Payments.Select(p => p.Name).ToListAsync());
             return payments;
         }
     }

@@ -34,7 +34,7 @@ namespace EQRental.Controllers
                              select new EquipmentOverviewDTO(e, e.Category);
             var ret = await equipments.ToListAsync();
             if (ret == null)
-                return NotFound();
+                return NotFound("No equipments found that are not yours.");
             return ret;
         }
 
@@ -59,7 +59,7 @@ namespace EQRental.Controllers
                              where e.ID == id && e.Available
                              select new EquipmentDTO(e, e.Category, e.Owner)).FirstOrDefaultAsync();
             if (ret == null)
-                return NotFound();
+                return NotFound("No equipments found with the given id.");
             return ret;
         }
 
@@ -67,37 +67,62 @@ namespace EQRental.Controllers
         public async Task<ActionResult<int>> PostEquipment(RentalOrderDTO order)
         {
             Rental _rental = await RentalOrderToRental(order);
+            if (_rental == null)
+                return BadRequest("Order not valid!");
             context.Rentals.Add(_rental);
             await context.SaveChangesAsync();
 
-            return CreatedAtAction("rentalId", _rental.ID);
+            return Ok();
         }
 
         private async Task<Rental> RentalOrderToRental(RentalOrderDTO order)
         {
-            var _rental = new Rental();
-            _rental.Payment = await (from p in context.Payments
-                                     where p.Name == order.PaymentMethod
-                                     select p).FirstOrDefaultAsync();
-            _rental.StartDate = order.StartDate;
-            _rental.EndDate = order.EndDate;
-            _rental.OrderDate = DateTime.Now;
-            _rental.EquipmentId = order.EquipmentId;
-            _rental.Equipment = await (from e in context.Equipments
-                                       where e.ID == order.EquipmentId
-                                       select e).FirstOrDefaultAsync();
-
+            if (!checkRentalValidity(order))
+                return null;
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            _rental.Address = await (from uaddr in context.UserAddresses
-                                     where uaddr.ID == order.AddressId && uaddr.UserID == userId
-                                     select uaddr).FirstOrDefaultAsync();
-            _rental.Status = await (from s in context.Statuses
-                                    where s.Name == "Processing"
-                                    select s).FirstOrDefaultAsync();
+            var _rental = new Rental
+            {
+                Payment = await (from p in context.Payments
+                                 where p.Name == order.PaymentMethod
+                                 select p).FirstOrDefaultAsync(),
+                StartDate = order.StartDate,
+                EndDate = order.EndDate,
+                OrderDate = DateTime.Now,
+                EquipmentId = order.EquipmentId,
+                Equipment = await (from e in context.Equipments
+                                   where e.ID == order.EquipmentId
+                                   select e).FirstOrDefaultAsync(),
+
+                Address = await (from uaddr in context.UserAddresses
+                                 where uaddr.ID == order.AddressId && uaddr.UserID == userId
+                                 select uaddr).FirstOrDefaultAsync(),
+                Status = await (from s in context.Statuses
+                                where s.Name == "Processing"
+                                select s).FirstOrDefaultAsync()
+            };
             _rental.PaymentID = _rental.Payment.ID;
             _rental.StatusID = _rental.Status.ID;
             _rental.AddressID = _rental.Address.ID;
             return _rental;
+        }
+
+        private bool checkRentalValidity(RentalOrderDTO o)
+        {
+            if (!context.UserAddresses.Any(ua => ua.ID == o.AddressId) ||
+                !context.Payments.Any(p => p.Name == o.PaymentMethod) ||
+                !context.Equipments.Any(e => e.ID == o.EquipmentId))
+                return false;
+            var qRentals = (from r in context.Rentals
+                            where r.EquipmentId == o.EquipmentId
+                            select r);
+            foreach (var r in qRentals)
+            {
+                if ((o.StartDate >= r.StartDate && o.StartDate <= r.EndDate) ||
+                    (o.EndDate >= r.StartDate && o.EndDate <= r.EndDate) ||
+                    (o.StartDate <= r.StartDate && o.EndDate >= r.EndDate))
+                    return false;
+            }
+            return true;
         }
     }
 }
