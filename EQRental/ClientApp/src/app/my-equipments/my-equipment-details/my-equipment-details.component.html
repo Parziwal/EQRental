@@ -19,6 +19,53 @@
     <div id="description-content" class="row">{{ equipment?.details }}</div>
   </div>
 </div>
+<mat-expansion-panel *ngFor="let rental of equipment?.rentals; let i = index">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <h5 class="mb-1">#{{rental.id}} Rentler name: {{rental.rentler.name}}</h5>
+    </mat-panel-title>
+    <mat-panel-description>
+      Order date: {{rental.orderDate | date:'shortDate'}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div>
+    <div class="row">
+        <div id="shipto" class="col-4">
+            <div class="row"><strong>Ship to:</strong></div>
+            <div class="row">Street: {{ rental.address.street }}</div>
+            <div class="row">City: {{ rental.address.postalCode }}, {{ rental.address.city }}</div>
+        </div>
+    </div>
+    <div class="row">
+      <table id="item">
+          <tr>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Subtotal</th>
+          </tr>
+          <tr>
+            <td>{{rental.startDate | date:'shortDate'}}</td>
+            <td>{{rental.endDate | date:'shortDate' }}</td>
+            <td>{{getSubtotal(rental.startDate, rental.endDate) | number}} Ft</td>
+          </tr>
+      </table>
+    </div>
+    <div class="row">
+        <div class="col gray-text-box">
+            <strong>Payment method: </strong> {{ rental?.paymentMethod }}
+        </div>
+    </div>
+    <div class="row">
+      <div class="col gray-text-box">
+          <strong>Status method: </strong> {{ rental.status }}
+      </div>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-primary" (click)="onSetStatus(i, getNextStatus(rental.status))" *ngIf="getNextStatus(rental.status)">Move to "{{ getNextStatus(rental.status) }}" status</button>
+        <button type="button" class="btn btn-danger" (click)="onSetStatus(i, 'CANCELED')" *ngIf="rental.status !== 'DELIVERED' && rental.status !== 'CANCELED'">Cancel</button>
+    </div>
+  </div>
+</mat-expansion-panel>
 <hr>
 <div class="row">
   <button id="back" type="button" class="btn btn-success" (click)="onClickBack()">Back</button>

@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'my-equipments', component: MyEquipmentsComponent, canActivate: [AuthorizeGuard], children: [
     { path: '', component: MyEquipmentsListComponent },
     { path: 'create', component: EquipmentCreateComponent },
+    { path: 'edit/:equipmentId', component: EquipmentCreateComponent },
     { path: ':id', component: MyEquipmentsDetailsComponent }
   ]},
   { path: 'rented-equipments', component: RentedEquipmentsComponent, canActivate: [AuthorizeGuard], children: [

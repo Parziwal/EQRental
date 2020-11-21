@@ -1,10 +1,16 @@
 <button type="button" class="btn btn-outline-success" (click)="onAddEquipment()">Add Equipment</button>
 <div class="list-group">
-  <a *ngFor="let equipment of equipments" routerLinkActive="active" [routerLink]="[equipment.id]" class="list-group-item list-group-item-action">
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">{{equipment?.name}}</h5>
-      <p id="currency">{{ equipment.pricePerDay | number}} FT / DAY</p>
+  <div *ngFor="let equipment of equipments;let i = index" class="position-relative">
+    <a routerLinkActive="active" [routerLink]="[equipment.id]" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-4">{{equipment?.name}}</h5>
+        <div class="buttons-place"></div>
+      </div>
+      <p id="category">{{ equipment.category }}</p>
+    </a>
+    <div class="buttons">
+      <button class="btn btn-outline-primary mr-2" (click)="onEditEquipment(equipment.id)">Edit</button>
+      <button class="btn btn-outline-danger" (click)="onDeleteEquipment(equipment.id, i)">Delete</button>
     </div>
-    <p id="category">{{ equipment.category }}</p>
-  </a>
+  </div>
 </div>
