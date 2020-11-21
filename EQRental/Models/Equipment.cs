@@ -22,6 +22,7 @@ namespace EQRental.Models
         public bool Available { get; set; }
         public int CategoryID { get; set; }
         public string OwnerID { get; set; }
+        public bool Deleted { get; set; }
         public Category Category { get; set; }
         public ApplicationUser Owner { get; set; }
         public ICollection<Rental> Rentals { get; set; }

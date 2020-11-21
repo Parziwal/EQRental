@@ -75,16 +75,20 @@ export class EquipmentCreateComponent implements OnInit {
         return;
     }
 
-    let editEquipmentObs: Observable<EquipmentPost>;
+    let editEquipmentObs: Observable<number | Object>;
     if (this.mode === 'create') {
       editEquipmentObs = this.myEquipmentService.addEquipment(this.equipmentForm.value);
     } else {
-      // editEquipmentObs = this.myEquipmentService.updatePost(this.postId, this.form.value.title, this.form.value.content, this.form.value.image);
+      editEquipmentObs = this.myEquipmentService
+      .updateEquipment(this.equipmentId, this.equipmentForm.value, this.equipmentForm.value.image);
     }
 
     editEquipmentObs.subscribe((response) => {
-      console.log(response);
-      this.router.navigate(['my-equipments', response]);
+      let id: number | Object = this.equipmentId;
+      if (this.mode === 'create') {
+        id = response;
+      }
+      this.router.navigate(['my-equipments', id]);
     });
   }
 
@@ -102,6 +106,6 @@ export class EquipmentCreateComponent implements OnInit {
   }
 
   onCancel() {
-
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

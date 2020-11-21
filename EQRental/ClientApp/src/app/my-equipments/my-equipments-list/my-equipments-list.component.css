@@ -13,3 +13,14 @@
 .btn-outline-success {
   margin-bottom: 20px;
 }
+
+.buttons {
+  position: absolute;
+  z-index: 10;
+  top: 16px;
+  right: 5px;
+}
+
+.buttons-place {
+  width: 230px;
+}

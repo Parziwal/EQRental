@@ -28,5 +28,17 @@ export class MyEquipmentsListComponent implements OnInit {
   onAddEquipment() {
     this.router.navigate(['create'], {relativeTo: this.route});
   }
+
+  onEditEquipment(id: number) {
+    this.router.navigate(['edit', id], {relativeTo: this.route});
+  }
+
+  onDeleteEquipment(id: number, index: number) {
+    this.myEquipmentsService.deleteEquipment(id).subscribe(
+      (response) => {
+        this.equipments.splice(index, 1);
+      }
+    );
+  }
 }
 

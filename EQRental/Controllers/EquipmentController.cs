@@ -30,7 +30,7 @@ namespace EQRental.Controllers
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var equipments = from e in context.Equipments
-                             where e.Owner.Id != userId
+                             where e.Owner.Id != userId && e.Available
                              select new EquipmentOverviewDTO(e, e.Category);
             var ret = await equipments.ToListAsync();
             if (ret == null)
@@ -44,7 +44,7 @@ namespace EQRental.Controllers
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var equipments = from e in context.Equipments
-                             where e.Owner.Id != userId && categories.Contains(e.Category.Name)
+                             where e.Owner.Id != userId && e.Available && categories.Contains(e.Category.Name) 
                              select new EquipmentOverviewDTO(e, e.Category);
             var ret = await equipments.ToListAsync();
             if (ret == null)
@@ -56,7 +56,7 @@ namespace EQRental.Controllers
         public async Task<ActionResult<EquipmentDTO>> Get(int id)
         {
             var ret = await (from e in context.Equipments
-                             where e.ID == id
+                             where e.ID == id && e.Available
                              select new EquipmentDTO(e, e.Category, e.Owner)).FirstOrDefaultAsync();
             if (ret == null)
                 return NotFound("No equipments found with the given id.");

@@ -5,7 +5,7 @@ export interface Equipment {
   name: string;
   details: string;
   imagePath: string;
-  pricePerDay: string;
+  pricePerDay: number;
   avalilable: boolean;
   category: string;
   rentals: Array<Rental>;

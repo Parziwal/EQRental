@@ -11,12 +11,3 @@ export interface Rental {
   orderDate: Date;
   paymentMethod: string;
 }
-
-/*
- *
- *
-        <p id="currency">Name: {{rental?.rentler.name}}</p>
-        <small>Start Date: {{ rental?.startDate | date:'medium' }}</small>
-        <p id="currency">Payment Method: {{ rental?.paymentMethod}}</p>
-        <p id="currency">Status: {{ rental?.status}}</p>
- */ 
