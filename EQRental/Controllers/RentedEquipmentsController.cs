@@ -123,7 +123,7 @@ namespace EQRental.Controllers
 
         private bool RentalExists(int id)
         {
-            return context.Payments.Any(e => e.ID == id);
+            return context.Rentals.Any(e => e.ID == id);
         }
     }
 }
