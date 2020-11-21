@@ -79,8 +79,7 @@ namespace EQRental.Controllers
             context.Equipments.Add(equipmentModel);
             await context.SaveChangesAsync();
 
-            var equipmentOverview = new EquipmentOverviewDTO(equipmentModel, equipmentModel.Category);
-            return CreatedAtAction("GetEquipment", equipmentOverview);
+            return CreatedAtAction("equipmentId", equipmentModel.ID);
         }
 
         [HttpDelete("{id}")]
@@ -121,7 +120,7 @@ namespace EQRental.Controllers
 
             await context.SaveChangesAsync();
 
-            return Ok("Equipment successfully deleted");
+            return NoContent();
         }
 
         [HttpPut("{id}")]
@@ -149,12 +148,11 @@ namespace EQRental.Controllers
                 equipmentModel.ImagePath = GenerateFilePath(equipment.Image).Result;
             }
             equipmentModel.PricePerDay = equipment.PricePerDay;
-            equipmentModel.Available = true;
             equipmentModel.CategoryID = (await context.Categories.FirstAsync(c => c.Name == equipment.Category)).ID;
 
             await context.SaveChangesAsync();
 
-            return Ok("Changes saved!");
+            return NoContent();
         }
 
         private async Task<string> GenerateFilePath(IFormFile file)

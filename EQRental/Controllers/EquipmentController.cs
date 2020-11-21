@@ -72,7 +72,7 @@ namespace EQRental.Controllers
             context.Rentals.Add(_rental);
             await context.SaveChangesAsync();
 
-            return Ok();
+            return CreatedAtAction("rentalId", _rental.ID);
         }
 
         private async Task<Rental> RentalOrderToRental(RentalOrderDTO order)
