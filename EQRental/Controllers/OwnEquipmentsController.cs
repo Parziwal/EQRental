@@ -173,12 +173,11 @@ namespace EQRental.Controllers
             return relativeFilePath;
         }
 
-        [Route("status")]
-        [HttpPut]
-        public async Task<IActionResult> PutState(int id, string status)
+        [HttpPut("{id}/rentalstatus/{rentalId}")]
+        public async Task<IActionResult> PutState(int id, int rentalId,[FromForm] string status)
         {
             var rentalStatus = await (from s in context.Statuses
-                                      where s.Name == status.ToUpper()
+                                      where s.Name == status
                                       select s).SingleOrDefaultAsync();
             if (rentalStatus == null)
             {
@@ -192,7 +191,7 @@ namespace EQRental.Controllers
             }
 
             var userRental = await (from r in context.Rentals
-                                    where r.Equipment.OwnerID == userId && r.ID == id
+                                    where r.Equipment.OwnerID == userId && r.EquipmentId == id && r.ID == rentalId
                                     select new { Rental = r, Status = r.Status }).SingleOrDefaultAsync();
 
             bool changed = false;
@@ -232,6 +231,30 @@ namespace EQRental.Controllers
         private bool RentalExists(int id)
         {
             return context.Rentals.Any(e => e.ID == id);
+        }
+
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> PutAvailable(int id, [FromForm]bool available)
+        {
+            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            if (userId == null)
+            {
+                return NotFound("User not found!");
+            }
+
+            var equipment = await (from e in context.Equipments
+                                   where e.OwnerID == userId && e.ID == id
+                                   select e).SingleOrDefaultAsync();
+
+            if (equipment == null)
+            {
+                return NotFound("Equipment not found!");
+            }
+
+            equipment.Available = available;
+            await context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

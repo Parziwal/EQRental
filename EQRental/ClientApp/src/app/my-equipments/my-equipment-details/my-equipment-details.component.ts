@@ -11,7 +11,7 @@ import { MyEquipmentsService } from '../my-equipments.service';
 export class MyEquipmentsDetailsComponent implements OnInit {
   id: number;
   equipment: Equipment;
-  private statuses: string[] = ['PROCESSING', 'PREPARING TO SHIP', 'UNDER DELIVERING', 'DELIVERED'];
+  isAvailable = true;
 
   constructor(private myEquipmentsService: MyEquipmentsService,
     private route: ActivatedRoute,
@@ -24,32 +24,15 @@ export class MyEquipmentsDetailsComponent implements OnInit {
         this.myEquipmentsService.getEquipment(this.id).subscribe(
           (equipmentData) => {
             this.equipment = equipmentData;
+            this.isAvailable = this.equipment.available;
           }
         );
       }
     );
   }
 
-  getSubtotal(startDate: Date, endDate: Date) {
-    const days = new Date(startDate).getTime() - new Date(endDate).getTime();
-    return new Date(days).getDate() * this.equipment.pricePerDay;
-  }
-
-  getNextStatus(currentStatus: string) {
-    const index = this.statuses.indexOf(currentStatus);
-    if (index !== -1 && index !== status.length - 1) {
-      return this.statuses[index + 1];
-    } else {
-      return null;
-    }
-  }
-
-  onSetStatus(index: number, status: string) {
-    this.myEquipmentsService.changeStatusTo(status, this.equipment.rentals[index].id).subscribe(
-      response => {
-        this.equipment.rentals[index].status = status;
-      }
-    );
+  onAvailableChanged() {
+    this.myEquipmentsService.changeAvailable(this.equipment.id, this.isAvailable).subscribe();
   }
 
   onClickBack() {
