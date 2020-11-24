@@ -30,6 +30,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { EquipmentRentalComponent } from './my-equipments/my-equipment-details/equipment-rental/equipment-rental.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CategoryListComponent,
     RentalEquipmentDetailsComponent,
     RentEquipmentComponent,
-    EquipmentCreateComponent
+    EquipmentCreateComponent,
+    EquipmentRentalComponent
   ],
   imports: [
     AppRoutingModule,
@@ -62,7 +65,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatInputModule,
     MatCardModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

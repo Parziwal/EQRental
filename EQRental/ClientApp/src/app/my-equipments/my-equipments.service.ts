@@ -12,8 +12,6 @@ import { Equipment } from './equipment.model';
   providedIn: 'root'
 })
 export class MyEquipmentsService {
-  private equipments: EquipmentOverview[] = [];
-  private equipmentsUpdate = new Subject<{ equipments: EquipmentOverview[] }>();
   private apiUrl = environment.apiUrl + 'ownequipments/';
 
   constructor(private http: HttpClient) { }
@@ -53,12 +51,15 @@ export class MyEquipmentsService {
     return this.http.delete(this.apiUrl + id);
   }
 
-  changeStatusTo(status: string, id: number) {
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append('id', id.toString());
-    queryParams = queryParams.append('status', status);
-    return this.http.put(this.apiUrl + 'status', {}, {
-        params: queryParams
-    });
+  changeStatusTo(equipmentId: number, rentalId: number, status: string) {
+    const statusData = new FormData();
+    statusData.append('status', String(status));
+    return this.http.put(this.apiUrl + equipmentId + '/rentalstatus/' + rentalId, statusData);
+  }
+
+  changeAvailable(id: number, value: boolean) {
+    const availableData = new FormData();
+    availableData.append('available', String(value));
+    return this.http.put(this.apiUrl + id + '/status', availableData);
   }
 }
