@@ -35,7 +35,7 @@ namespace EQRental.Controllers
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var ownEquipments = from e in context.Equipments
-                                where e.OwnerID == userId && !e.Deleted
+                                where e.OwnerID == userId
                                 select new EquipmentOverviewDTO(e, e.Category);
             return await ownEquipments.ToListAsync();
         }
@@ -108,7 +108,11 @@ namespace EQRental.Controllers
                                           select s).SingleOrDefaultAsync();
                 foreach (Rental r in deleteItem.Rentals)
                 {
-                    r.Status = canceledStatus;
+                    string statusName = await (from rent in context.Rentals
+                                     where rent.ID == r.ID
+                                     select rent.Status.Name).SingleOrDefaultAsync();
+                    if (statusName != "DELIVERED")
+                        r.Status = canceledStatus;
                 }
                 deleteItem.Deleted = true;
                 deleteItem.Available = false;

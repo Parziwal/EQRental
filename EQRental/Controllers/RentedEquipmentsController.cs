@@ -33,7 +33,7 @@ namespace EQRental.Controllers
                 return NotFound("User not found!");
             }
 
-            var userRentals = from r in context.Rentals
+            var userRentals = from r in context.Rentals.IgnoreQueryFilters()
                               where r.Address.User.Id == userId
                               select new RentalOverviewDTO(r.ID, r.Equipment.Name, r.OrderDate, r.Status.Name);
             return await userRentals.ToListAsync();
@@ -48,8 +48,8 @@ namespace EQRental.Controllers
                 return NotFound("User not found!");
             }
 
-            var userRental = await (from r in context.Rentals
-                              where r.Address.User.Id == userId && r.ID == id
+            var userRental = await (from r in context.Rentals.IgnoreQueryFilters()
+                                    where r.Address.User.Id == userId && r.ID == id
                               select new RentalDTO(r, r.Equipment, r.Equipment.Category, r.Equipment.Owner, r.Address, r.Status, r.Payment))
                               .SingleOrDefaultAsync();
 

@@ -36,6 +36,8 @@ namespace EQRental.Data
             modelBuilder.Entity<Category>().ToTable("Category");
             modelBuilder.Entity<Status>().ToTable("Status");
             modelBuilder.Entity<Payment>().ToTable("Payment");
+
+            modelBuilder.Entity<Equipment>().HasQueryFilter(e => !e.Deleted);
         }
     }
 }
