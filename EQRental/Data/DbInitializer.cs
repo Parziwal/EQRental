@@ -18,7 +18,7 @@ namespace EQRental.Data
         {
             using (var context = serviceProvider.GetRequiredService<ApplicationDbContext>())
             {
-                context.Database.EnsureDeleted();
+                //context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
                 var categories = new Category[]
