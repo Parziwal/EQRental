@@ -18,9 +18,9 @@ namespace EQRental.Data
         {
             using (var context = serviceProvider.GetRequiredService<ApplicationDbContext>())
             {
-                //context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
+                context.Categories.RemoveRange(context.Categories);
                 var categories = new Category[]
                 {
                     new Category{ Name = "Electronics & Computers" },
@@ -36,6 +36,7 @@ namespace EQRental.Data
                 context.Categories.AddRange(categories);
                 context.SaveChanges();
 
+                context.Statuses.RemoveRange(context.Statuses);
                 var statuses = new Status[]
                 {
                     new Status{ Name = "PROCESSING" },
@@ -48,15 +49,17 @@ namespace EQRental.Data
                 context.Statuses.AddRange(statuses);
                 context.SaveChanges();
 
+                context.Payments.RemoveRange(context.Payments);
                 var payments = new Payment[]
                 {
-                new Payment { Name = "Cash" },
-                new Payment { Name = "Remittance" },
+                    new Payment { Name = "Cash" },
+                    new Payment { Name = "Remittance" },
                 };
 
                 context.Payments.AddRange(payments);
                 context.SaveChanges();
 
+                context.Users.RemoveRange(context.Users);
                 var users = new ApplicationUser[]
                 {
                     new ApplicationUser{UserName="alexander33", FullName="Carson Alexander", Email="carson@email.hu", PhoneNumber="06-30-123-1234", BankAccount="10032230-04525279-06720008"},
@@ -76,6 +79,7 @@ namespace EQRental.Data
                 context.Users.AddRange(users);
                 context.SaveChanges();
 
+                context.UserAddresses.RemoveRange(context.UserAddresses);
                 var addresses = new UserAddress[]
                 {
                     new UserAddress{ PostalCode=1022, City="Budapest", Street="Lévay u. 5", User = users[0] },
@@ -87,6 +91,7 @@ namespace EQRental.Data
                 context.UserAddresses.AddRange(addresses);
                 context.SaveChanges();
 
+                context.Equipments.RemoveRange(context.Equipments);
                 var equipments = new Equipment[]
                 {
                     new Equipment{Name="Bosch Rotak Lawnmower", PricePerDay=5000,
@@ -119,6 +124,7 @@ namespace EQRental.Data
                 context.Equipments.AddRange(equipments);
                 context.SaveChanges();
 
+                context.Rentals.RemoveRange(context.Rentals);
                 var rentals = new Rental[]
                 {
                     new Rental{ Equipment=equipments[0], OrderDate=new DateTime(2020, 10, 20, 12, 40, 2), StartDate=new DateTime(2020, 11, 1), EndDate=new DateTime(2020, 11, 7),
